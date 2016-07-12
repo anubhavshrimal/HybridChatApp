@@ -30,9 +30,6 @@ angular.module('app.controllers', [])
 
 .controller('privateChatCtrl', function($scope, $ionicHistory) {
   $scope.name ="abc";
-  $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
-    viewData.enableBack = true;
-  });
   $scope.myGoBack = function () {
     $ionicHistory.goBack();
   }
@@ -54,7 +51,10 @@ angular.module('app.controllers', [])
 
 })
 
-.controller('friendProfileViewCtrl', function($scope) {
+.controller('friendProfileViewCtrl', function($scope, $ionicHistory) {
+  $scope.myGoBack = function () {
+    $ionicHistory.goBack();
+  }
 
 })
 
