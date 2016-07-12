@@ -33,9 +33,9 @@ angular.module('app.controllers', [])
   $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
     viewData.enableBack = true;
   });
-  // $scope.myGoBack = function () {
-  //   $ionicHistory.goBack();
-  // }
+  $scope.myGoBack = function () {
+    $ionicHistory.goBack();
+  }
 })
 
 .controller('chatBotCtrl', function($scope) {
