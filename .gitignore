@@ -11,3 +11,4 @@ hooks/
 ionic.project
 .bowerrc
 .editorconfig
+www/lib/
