@@ -4,8 +4,9 @@ angular.module('app.controllers', [])
 
 })
 
-.controller('chatsCtrl', function($scope) {
-
+.controller('chatsCtrl', function($scope, users) {
+  var user = users.get('mobile');
+  user.$bindTo($scope, "fireObj");
 })
 
 .controller('groupsCtrl', function($scope) {
