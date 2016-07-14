@@ -3,11 +3,11 @@
         <form id="signUp-form2" class="list ">
             <ion-list id="signUp-list2" class=" ">
                 <label class="item item-select " id="signUp-select1">
-                    <span class="input-label">Select Country</span>
-                    <select></select>
+                    <div class="input-label">Country</div>
+                    <select type="text" ng-options="x['name'] for x in dialList" ng-model="country"></select>
                 </label>
                 <label class="item item-input " id="signUp-input5">
-                    <input type="tel" placeholder="Enter Mobile Number *">
+                    <input type="tel" placeholder="Enter mobile number without dial code*" ng-model="mobileNum">
                 </label>
             </ion-list>
             <div class="spacer" style="height: 40px;"></div>

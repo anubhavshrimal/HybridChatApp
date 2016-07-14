@@ -5,8 +5,7 @@ angular.module('app.controllers', [])
 })
 
 .controller('chatsCtrl', function($scope, users) {
-  var user = users.get('mobile');
-  user.$bindTo($scope, "fireObj");
+  $scope.user = users.get('+919828011756');
 })
 
 .controller('groupsCtrl', function($scope) {
@@ -17,8 +16,17 @@ angular.module('app.controllers', [])
 
 })
 
-.controller('signUpCtrl', function($scope) {
+.controller('signUpCtrl', function($scope, dialCodes, currentLocationDetails) {
+  $scope.dialList = dialCodes; // get the list of countries to populate the dropdown.
 
+  $scope.country = dialCodes[97]; // by default india is selected.
+
+  // set the value of select to the country in which user is by checking latitude longitude.
+  if(currentLocationDetails != undefined){
+    $scope.country = _.find(dialCodes, function (obj) {
+      return obj.name == currentLocationDetails.components.country;
+    });
+  }
 })
 
 .controller('verificationCtrl', function($scope) {
