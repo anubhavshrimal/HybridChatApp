@@ -31,7 +31,10 @@ angular.module('app.routes', [])
     views: {
       'tab4': {
         templateUrl: 'templates/chats.html',
-        controller: 'chatsCtrl'
+        controller: 'chatsCtrl',
+        resolve: {
+          user: getUser
+        }
       }
     }
   })
@@ -61,25 +64,7 @@ angular.module('app.routes', [])
     templateUrl: 'templates/signUp.html',
     controller: 'signUpCtrl',
     resolve: {
-      currentLocationDetails: function ($cordovaGeolocation, $http) {
-        var posOptions = {timeout: 10000, enableHighAccuracy: false};
-        var lat;
-        var long;
-        var API_KEY = '2bf579245ce858eb98ccc1c01137c65d';
-        return $cordovaGeolocation
-          .getCurrentPosition(posOptions)
-          .then(function (position) {
-            lat  = position.coords.latitude
-            long = position.coords.longitude
-            return $http.get('http://api.opencagedata.com/geocode/v1/json?q='+lat+'+'+long+'&key='+API_KEY).then(function (data) {
-              return data.data.results[0];
-            }, function (err) {
-              return "error";
-            });
-          }, function(err) {
-            // error
-          });
-      }
+        currentLocationDetails: getCountryByPos
     }
   })
 
@@ -154,3 +139,28 @@ $urlRouterProvider.otherwise('/signup')
 
 
 });
+
+// gets the country using the latitude and longitdue
+var getCountryByPos =  function ($cordovaGeolocation, $http) {
+  var posOptions = {timeout: 10000, enableHighAccuracy: false};
+  var lat;
+  var long;
+  var API_KEY = '85d0d21e759211619b8e307a294e4848';  // 2bf579245ce858eb98ccc1c01137c65d
+  return $cordovaGeolocation
+    .getCurrentPosition(posOptions)
+    .then(function (position) {
+      lat  = position.coords.latitude;
+      long = position.coords.longitude;
+      return $http.get('http://api.opencagedata.com/geocode/v1/json?q='+lat+'+'+long+'&key='+API_KEY).then(function (data) {
+        return data.data.results[0];
+      }, function (err) {
+        return "error";
+      });
+    }, function(err) {
+      // error
+    });
+}
+
+var getUser = function (users) {
+  return users.get(user.mobileNum);
+}

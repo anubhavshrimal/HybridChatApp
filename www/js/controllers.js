@@ -4,8 +4,8 @@ angular.module('app.controllers', [])
 
 })
 
-.controller('chatsCtrl', function($scope, users) {
-  $scope.user = users.get('+919828011756');
+.controller('chatsCtrl', function($scope, user) {
+  $scope.chats = user.relationshipArray;
 })
 
 .controller('groupsCtrl', function($scope) {
@@ -16,21 +16,38 @@ angular.module('app.controllers', [])
 
 })
 
-.controller('signUpCtrl', function($scope, dialCodes, currentLocationDetails) {
-  $scope.dialList = dialCodes; // get the list of countries to populate the dropdown.
+.controller('signUpCtrl', function($scope, dialCodes, currentLocationDetails, $localForage, users, setNumber) {
+  $scope.dialList = dialCodes; // get the list of countries to populate the drop-down.
 
   $scope.country = dialCodes[97]; // by default india is selected.
 
-  // set the value of select to the country in which user is by checking latitude longitude.
+  // set the value of select to the country in which user
   if(currentLocationDetails != undefined){
     $scope.country = _.find(dialCodes, function (obj) {
       return obj.name == currentLocationDetails.components.country;
     });
   }
+
+  $scope.sendOTP = function (m) {
+    m = $scope.country.dial_code+m;
+    $localForage.setItem("mobileNum", m);
+    setNumber.number = m;
+    var obj = users.get(m);
+
+    var OTP = "";
+    for(var i = 0; i < 5; i++){     // generating random OTP
+      OTP += Math.floor(Math.random()*9)+1;
+    }
+    var temp = {"OTP": {"password":OTP, "timestamp": new Date().getTime()}};
+    for(attr in temp){
+      obj[attr] = temp[attr];
+    }
+    obj.$save();
+  }
 })
 
-.controller('verificationCtrl', function($scope) {
-
+.controller('verificationCtrl', function($scope, getNumber) {
+  console.log(getNumber.number);
 })
 
 .controller('welcomeCtrl', function($scope) {

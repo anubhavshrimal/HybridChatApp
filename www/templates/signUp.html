@@ -11,7 +11,7 @@
                 </label>
             </ion-list>
             <div class="spacer" style="height: 40px;"></div>
-            <a ui-sref="verification" id="signUp-button2" class=" button button-positive  button-block ">Send OTP</a>
+            <a ng-click="sendOTP(mobileNum)" ui-sref="verification" id="signUp-button2" ng-disabled="!mobileNum" class=" button button-positive  button-block ">Send OTP</a>
         </form>
         <p id="signUp-markdown1" style="color:#000000;" class=" ">* A One Time Password (OTP) will be sent to the above specified mobile number for verification.</p>
     </ion-content>
