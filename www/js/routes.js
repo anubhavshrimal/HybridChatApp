@@ -128,7 +128,7 @@ angular.module('app.routes', [])
     controller: 'notificationsCtrl'
   })
 
-$urlRouterProvider.otherwise('/home/chats')
+$urlRouterProvider.otherwise('/signup')
 
 
 
