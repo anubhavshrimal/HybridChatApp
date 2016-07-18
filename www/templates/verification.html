@@ -4,12 +4,12 @@
             <div class="spacer" style="width: 300px; height: 78px;"></div>
             <ion-list id="verification-list3" class=" ">
                 <label class="item item-input " id="verification-input7">
-                    <input type="number" placeholder="Enter the 5 digit OTP">
+                    <input type="number" placeholder="Enter the 5 digit OTP" ng-model="otp">
                 </label>
             </ion-list>
-            <a ui-sref="welcome" id="verification-button4" style="font-weight:600;" class=" button button-positive  button-block ">Verify</a>
+            <button id="verification-button4" ng-click="verify(otp)" ng-disabled="!otp" style="font-weight:600;" class=" button button-positive  button-block ">Verify</button>
         </form>
         <p id="verification-markdown2" style="color:#000000;" class=" ">Didn't get the SMS?</p>
-        <button id="verification-button8" class=" button button-positive button-small ">Click Here!</button>
+        <button id="verification-button8" ng-click="resendOTP()" class=" button button-positive button-small ">Click Here!</button>
     </ion-content>
 </ion-view>
