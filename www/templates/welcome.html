@@ -14,7 +14,7 @@
                     <input type="text" placeholder="Enter your name" ng-model="displayName">
                 </label>
             </ion-list>
-            <a id="welcome-button6" ui-sref="tabsController.chats" class=" button button-positive  button-block ">Save Changes</a>
+            <a ui-sref="tabsController.chats" id="welcome-button6" ng-click="saveName(displayName)" ng-disabled="!displayName" class=" button button-positive  button-block ">Save Changes</a>
         </form>
     </ion-content>
 </ion-view>

@@ -29,10 +29,7 @@ angular.module('app.routes', [])
     views: {
       'tab4': {
         templateUrl: 'templates/chats.html',
-        controller: 'chatsCtrl',
-        resolve: {
-          user: getUser
-        }
+        controller: 'chatsCtrl'
       }
     }
   })
@@ -158,10 +155,6 @@ var getCountryByPos =  function ($cordovaGeolocation, $http) {
     }, function(err) {
       // error
     });
-}
-
-var getUser = function (users) {
-  return users.get(user.mobileNum);
 }
 
 var checkIfAccountExists = function ($q, $state, $timeout, auth, $localForage) {

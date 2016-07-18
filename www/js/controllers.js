@@ -4,9 +4,8 @@ angular.module('app.controllers', [])
 
 })
 
-.controller('chatsCtrl', function($scope, user) {
+.controller('chatsCtrl', function($scope, $ionicHistory) {
   $ionicHistory.clearHistory();
-  $scope.chats = user.relationshipArray;
 })
 
 .controller('groupsCtrl', function($scope) {
@@ -84,10 +83,7 @@ angular.module('app.controllers', [])
 
 .controller('welcomeCtrl', function($scope, $ionicHistory, saveNameService) {
   $ionicHistory.clearHistory();
-  $scope.saveName = function () {
-    
-  }
-    //saveNameService.save;
+  $scope.saveName = saveNameService.save;
 })
 
 .controller('privateChatCtrl', function($scope, goBack) {
