@@ -5,6 +5,7 @@ angular.module('app.controllers', [])
 })
 
 .controller('chatsCtrl', function($scope, user) {
+  $ionicHistory.clearHistory();
   $scope.chats = user.relationshipArray;
 })
 
@@ -28,8 +29,8 @@ angular.module('app.controllers', [])
     });
   }
 
-  $scope.sendOTP = function (m) {
-    m = $scope.country.dial_code+m;
+  $scope.sendOTP = function (m, country) {
+    m = country.dial_code+m;
     $localForage.setItem("mobileNum", m);
     setNumber.number = m;
     OTP.generate(m);
@@ -81,13 +82,17 @@ angular.module('app.controllers', [])
   }
 })
 
-.controller('welcomeCtrl', function($scope, $ionicHistory) {
+.controller('welcomeCtrl', function($scope, $ionicHistory, saveNameService) {
   $ionicHistory.clearHistory();
+  $scope.saveName = function () {
+    
+  }
+    //saveNameService.save;
 })
 
 .controller('privateChatCtrl', function($scope, goBack) {
   $scope.name ="abc";
-  $scope.myGoBack = goBack;
+  $scope.myGoBack = goBack.return;
 
 })
 

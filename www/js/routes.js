@@ -8,8 +8,6 @@ angular.module('app.routes', [])
   // Each state's controller can be found in controllers.js
   $stateProvider
 
-
-
       .state('tabsController', {
     url: '/home',
     templateUrl: 'templates/tabsController.html',
@@ -64,6 +62,7 @@ angular.module('app.routes', [])
     templateUrl: 'templates/signUp.html',
     controller: 'signUpCtrl',
     resolve: {
+        // redirect: checkIfAccountExists,
         currentLocationDetails: getCountryByPos
     }
   })
@@ -164,3 +163,23 @@ var getCountryByPos =  function ($cordovaGeolocation, $http) {
 var getUser = function (users) {
   return users.get(user.mobileNum);
 }
+
+var checkIfAccountExists = function ($q, $state, $timeout, auth, $localForage) {
+  var deferred = $q.defer();
+
+  $timeout(function() {
+    if ($localForage.getItem("mobileNum") != null || $localForage.getItem("displayName") != null) {
+
+      if ($localForage.getItem("displayName") == null)
+        $state.go('welcome');
+      else if($localForage.getItem("mobileNum") != null)
+        $state.go("tabsController.chats");
+
+      deferred.reject();
+    }
+    else
+      deferred.resolve();
+  });
+  return deferred.promise;
+}
+

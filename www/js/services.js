@@ -68,9 +68,15 @@ angular.module('app.services', [])
     }
   }])
 
+  .service("saveNameService", ["$localForage", function ($localForage) {
+    this.save = function (displayName) {
+      $localForage.setItem("displayName", displayName);
+    }
+  }])
+
   // back button function
-  .factory("goBack", ["$ionicHistory", function ($ionicHistory) {
-    return function () {
+  .service("goBack", ["$ionicHistory", function ($ionicHistory) {
+    this.return =  function () {
       $ionicHistory.goBack();
     }
   }])
