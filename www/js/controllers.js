@@ -81,9 +81,21 @@ angular.module('app.controllers', [])
   }
 })
 
-.controller('welcomeCtrl', function($scope, $ionicHistory, saveNameService) {
+.controller('welcomeCtrl', function($scope, $ionicHistory, saveNameService, openImagePicker) {
   $ionicHistory.clearHistory();
+  $scope.image = "img/anonymous.avatar.gif";
   $scope.saveName = saveNameService.save;
+  $scope.uploadImage = function(){
+    openImagePicker(1, 100, 100, 80).then(function (results) {
+      $scope.image = results;
+      console.log(results);
+      window.plugins.Base64.encodeFile($scope.image, function(base64){  // Encode URI to Base64 needed to display image
+        $scope.collection.selectedImage = base64;
+      });
+    }, function(error) {
+      // error getting photos
+    });
+  }
 })
 
 .controller('privateChatCtrl', function($scope, goBack) {

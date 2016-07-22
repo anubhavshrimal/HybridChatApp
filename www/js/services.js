@@ -51,10 +51,12 @@ angular.module('app.services', [])
         OTP += Math.floor(Math.random()*9)+1;
       }
       var temp = {"OTP": {"password":OTP, "timestamp": new Date().getTime()}};
+
       obj.$loaded().then(function () {
         for(attr in temp){
           obj[attr] = temp[attr];
         }
+
         obj.$save();
       })
     }
@@ -70,6 +72,7 @@ angular.module('app.services', [])
       })
         .then(function (user) {
           user["displayName"] = displayName;
+          user["status"] = "Available";
           user.$save();
 
           var userData = {"mobile": user.$id,
@@ -91,6 +94,27 @@ angular.module('app.services', [])
   .service("goBack", ["$ionicHistory", function ($ionicHistory) {
     this.return =  function () {
       $ionicHistory.goBack();
+    }
+  }])
+
+  // returns a promise which contains the cropped image uri choosen from image picker
+  .factory("openImagePicker", ["$cordovaImagePicker", function ($cordovaImagePicker) {
+    return function(maxCount, width, height, quality){
+      var options = {
+        maximumImagesCount: maxCount,
+        width: width,
+        height: height,
+        quality: quality
+      };
+
+      return $cordovaImagePicker.getPictures(options);
+        // .then(function (results) {
+        //   for (var i = 0; i < results.length; i++) {
+        //     console.log('Image URI: ' + results[i]);
+        //   }
+        // }, function(error) {
+        //   // error getting photos
+        // });
     }
   }])
 

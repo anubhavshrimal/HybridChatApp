@@ -4,8 +4,12 @@
         <div class="spacer" style="width: 300px; height: 29px;"></div>
         <div>
             <div style="text-align: center;">
-                <input type="image" src="http://khojmaster.com/ui/user/realestate/assets/img/no-user.jpg" width="120px" style=" border-radius: 50%;" ng-click="">
-                <input type="file" id="my_file" style="display: none;">
+                <div>
+                  <input type="image" src="{{image}}" width="100px" style=" border-radius: 50%;" ng-click="">
+                </div>
+                <div>
+                  <button ng-click="uploadImage()" id="my_file">Upload Profile Pic</button>
+                </div>
             </div>
         </div>
         <form id="welcome-form4" class="list ">

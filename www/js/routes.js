@@ -129,7 +129,7 @@ angular.module('app.routes', [])
     controller: 'notificationsCtrl'
   })
 
-$urlRouterProvider.otherwise('/signup')
+$urlRouterProvider.otherwise('/welcome')
 
 
 
