@@ -59,7 +59,6 @@ angular.module('app.routes', [])
     templateUrl: 'templates/signUp.html',
     controller: 'signUpCtrl',
     resolve: {
-        // redirect: checkIfAccountExists,
         currentLocationDetails: getCountryByPos
     }
   })
@@ -156,23 +155,3 @@ var getCountryByPos =  function ($cordovaGeolocation, $http) {
       // error
     });
 }
-
-var checkIfAccountExists = function ($q, $state, $timeout, auth, $localForage) {
-  var deferred = $q.defer();
-
-  $timeout(function() {
-    if ($localForage.getItem("mobileNum") != null || $localForage.getItem("displayName") != null) {
-
-      if ($localForage.getItem("displayName") == null)
-        $state.go('welcome');
-      else if($localForage.getItem("mobileNum") != null)
-        $state.go("tabsController.chats");
-
-      deferred.reject();
-    }
-    else
-      deferred.resolve();
-  });
-  return deferred.promise;
-}
-

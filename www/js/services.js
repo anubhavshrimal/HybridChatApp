@@ -21,14 +21,6 @@ angular.module('app.services', [])
     }
   }])
 
-  // returns the list of contacts associated with the user
-  .service('relationshipArray', ["rootRef", "$firebaseArray", function (rootRef, $firebaseArray) {
-    var usersRef = rootRef.child('userInfo');
-    this.get = function (mobileNum) {
-      return $firebaseObject(usersRef.child(mobileNum));
-    }
-  }])
-
   // returns the mobile number from the localStorage
   .service("getNumber", ["setNumber", "$localForage", function (setNumber, $localForage) {
     this.number = setNumber.number;
@@ -68,9 +60,30 @@ angular.module('app.services', [])
     }
   }])
 
-  .service("saveNameService", ["$localForage", function ($localForage) {
+  .service("saveNameService", ["$localForage", "users", "getNumber", "$state", function ($localForage, users, getNumber, $state) {
     this.save = function (displayName) {
       $localForage.setItem("displayName", displayName);
+
+      getNumber.promise
+        .then(function (data) {
+          return users.get(data);
+      })
+        .then(function (user) {
+          user["displayName"] = displayName;
+          user.$save();
+
+          var userData = {"mobile": user.$id,
+            "displayName": user.displayName,
+            "relationshipArray": user.relationshipArray,
+            "settings": user.settings,
+            "status": user.status
+          };
+
+          return $localForage.setItem("userData", userData);
+      })
+        .then(function () {
+          $state.go("tabsController.chats");
+        });
     }
   }])
 
