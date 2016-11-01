@@ -11,10 +11,10 @@
         <form id="welcome-form4" class="list ">
             <ion-list id="welcome-list4" class=" ">
                 <label class="item item-input " id="welcome-input9">
-                    <input type="text" placeholder="Enter your name">
+                    <input type="text" placeholder="Enter your name" ng-model="displayName">
                 </label>
             </ion-list>
-            <a ui-sref="tabsController.chats" id="welcome-button6" class=" button button-positive  button-block ">Save Changes</a>
+            <a ui-sref="tabsController.chats" id="welcome-button6" ng-click="saveName(displayName)" ng-disabled="!displayName" class=" button button-positive  button-block ">Save Changes</a>
         </form>
     </ion-content>
 </ion-view>

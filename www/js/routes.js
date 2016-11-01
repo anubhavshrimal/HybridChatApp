@@ -8,8 +8,6 @@ angular.module('app.routes', [])
   // Each state's controller can be found in controllers.js
   $stateProvider
 
-
-
       .state('tabsController', {
     url: '/home',
     templateUrl: 'templates/tabsController.html',
@@ -59,7 +57,11 @@ angular.module('app.routes', [])
   .state('signUp', {
     url: '/signup',
     templateUrl: 'templates/signUp.html',
-    controller: 'signUpCtrl'
+    controller: 'signUpCtrl',
+    resolve: {
+        // redirect: checkIfAccountExists,
+        currentLocationDetails: getCountryByPos
+    }
   })
 
   .state('verification', {
@@ -128,8 +130,49 @@ angular.module('app.routes', [])
     controller: 'notificationsCtrl'
   })
 
-$urlRouterProvider.otherwise('/home/chats')
+$urlRouterProvider.otherwise('/signup')
 
 
 
 });
+
+// gets the country using the latitude and longitdue
+var getCountryByPos =  function ($cordovaGeolocation, $http) {
+  var posOptions = {timeout: 10000, enableHighAccuracy: false};
+  var lat;
+  var long;
+  var API_KEY = '85d0d21e759211619b8e307a294e4848';  // 2bf579245ce858eb98ccc1c01137c65d
+  return $cordovaGeolocation
+    .getCurrentPosition(posOptions)
+    .then(function (position) {
+      lat  = position.coords.latitude;
+      long = position.coords.longitude;
+      return $http.get('http://api.opencagedata.com/geocode/v1/json?q='+lat+'+'+long+'&key='+API_KEY).then(function (data) {
+        return data.data.results[0];
+      }, function (err) {
+        return "error";
+      });
+    }, function(err) {
+      // error
+    });
+}
+
+var checkIfAccountExists = function ($q, $state, $timeout, auth, $localForage) {
+  var deferred = $q.defer();
+
+  $timeout(function() {
+    if ($localForage.getItem("mobileNum") != null || $localForage.getItem("displayName") != null) {
+
+      if ($localForage.getItem("displayName") == null)
+        $state.go('welcome');
+      else if($localForage.getItem("mobileNum") != null)
+        $state.go("tabsController.chats");
+
+      deferred.reject();
+    }
+    else
+      deferred.resolve();
+  });
+  return deferred.promise;
+}
+
