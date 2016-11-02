@@ -90,7 +90,7 @@ angular.module('app.controllers', [])
       $scope.image = results;
       console.log(results);
       window.plugins.Base64.encodeFile($scope.image, function(base64){  // Encode URI to Base64 needed to display image
-        $scope.collection.selectedImage = base64;
+        $scope.image = base64;
       });
     }, function(error) {
       // error getting photos
